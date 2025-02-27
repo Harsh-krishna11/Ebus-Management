@@ -3,8 +3,7 @@ import { useFirebase } from "../context/Firebase";
 
 const AddDriver = () => {
   const firebase = useFirebase();
-  const { signupUserWithEmailAndPassword, addDriverToFirestore } =
-    useFirebase();
+  const { signupUserWithEmailAndPassword, storeUserData } = useFirebase();
   const [driver, setDriver] = useState({
     name: "",
     age: "",
@@ -32,7 +31,7 @@ const AddDriver = () => {
       );
 
       // Store driver data in Firestore using the utility function
-      await addDriverToFirestore(user.uid, driver);
+      await storeUserData(user.uid, driver,"driver");
 
       alert("Driver added successfully!");
       setDriver({
