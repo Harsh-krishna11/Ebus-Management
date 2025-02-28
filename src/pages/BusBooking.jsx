@@ -9,7 +9,7 @@ import { buses } from "../assets/busdata";
 export default function App() {
   const location = useLocation();
   const { fetchBuses } = useFirebase(); // Import fetchBuses from Firebase context
-  // const [buses, setBuses] = useState([]); // State to store buses
+  const [buses, setBuses] = useState([]); // State to store buses
 
   // Function to get query parameters
   const getQueryParams = () => {

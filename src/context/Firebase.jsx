@@ -43,7 +43,7 @@ export const FirebaseProvider = ({ children }) => {
   const [role, setRole] = useState(null);
 
   useEffect(() => {
-    let isMounted = true; 
+    let isMounted = true;
 
     const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
       if (authUser) {
@@ -65,10 +65,10 @@ export const FirebaseProvider = ({ children }) => {
     });
 
     return () => {
-      isMounted = false; 
+      isMounted = false;
       unsubscribe();
     };
-  }, []); 
+  }, []);
 
   const storeUserData = async (userId, userData, role) => {
     try {
@@ -76,6 +76,7 @@ export const FirebaseProvider = ({ children }) => {
       await setDoc(doc(firestore, collectionName, userId), {
         ...userData,
         uid: userId,
+        role:role,
         createdAt: serverTimestamp(),
       });
       console.log("User data stored successfully");
@@ -212,6 +213,16 @@ export const FirebaseProvider = ({ children }) => {
     }
   };
 
+  const removeDriverFromFirestore = async (id) => {
+    try {
+      await deleteDoc(doc(firestore, "drivers", id));
+      console.log("Driver removed successfully");
+    } catch (error) {
+      console.error("Error removing driver:", error);
+      throw error;
+    }
+  };
+
   const logoutUser = async () => {
     try {
       await signOut(auth);
@@ -232,6 +243,7 @@ export const FirebaseProvider = ({ children }) => {
         role,
         setRole,
         getUserRole,
+        removeDriverFromFirestore,
         signupUserWithEmailAndPassword,
         loginUserWithEmailAndPassword,
         logoutUser,
@@ -246,10 +258,3 @@ export const FirebaseProvider = ({ children }) => {
     </FirebaseContext.Provider>
   );
 };
-
-
-
-
-
-
-

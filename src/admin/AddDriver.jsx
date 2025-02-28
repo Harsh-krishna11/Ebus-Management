@@ -10,6 +10,7 @@ const AddDriver = () => {
     email: "",
     password: "",
     phoneNumber: "",
+    role:"driver",
   });
   const [loading, setLoading] = useState(false);
 
